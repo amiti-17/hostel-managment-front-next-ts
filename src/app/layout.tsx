@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import Providers from "@/providers";
+import "@progress/kendo-theme-default/dist/all.css";
 import "./globals.css";
+import style from "./page.module.css";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -16,7 +19,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body className={`${inter.className} ${style.root}`}>
+        <Providers>{children}</Providers>
+      </body>
     </html>
   );
 }
