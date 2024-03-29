@@ -7,24 +7,29 @@ import style from "./style.module.css";
 import { useMutation } from "@apollo/client";
 import { AUTH } from "@/Apollo/queries/auth";
 import { FormEvent, useEffect } from "react";
+import { useRouter } from "next/navigation";
+import { StatusOutput } from "@/generated/types";
 
 const LoginForm = () => {
-  const [loginQuery, { data, loading, error }] = useMutation(AUTH.login);
+  const [loginQuery, { loading, error }] = useMutation(AUTH.login);
+  const router = useRouter();
+  const submitHandler = (values: { email: string; password: string }) => {
+    console.log(JSON.stringify(values, null, 2));
+    loginQuery({
+      variables: { input: values },
+      onCompleted(data: { login: StatusOutput }) {
+        console.log(data);
+        router.push("/dashboard");
+      },
+    });
+  };
   const formik = useFormik({
     initialValues: {
       email: "",
       password: "",
     },
     validationSchema: loginValidationSchema,
-    onSubmit: (values) => {
-      console.log(JSON.stringify(values, null, 2));
-      loginQuery({
-        variables: { input: values },
-        onCompleted(data) {
-          console.log(data);
-        },
-      });
-    },
+    onSubmit: submitHandler,
   });
   useEffect(() => {
     console.log(loading, error);

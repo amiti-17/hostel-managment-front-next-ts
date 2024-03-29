@@ -1,7 +1,7 @@
 import CopyrightWrapper from "@/components/CopyrightBlock";
 import LoginForm from "@/components/LoginPage/LoginForm";
 
-export default function Login() {
+const LoginPage = () => {
   return (
     <>
       <>Maybe header? with logo?</>
@@ -9,4 +9,6 @@ export default function Login() {
       <CopyrightWrapper />
     </>
   );
-}
+};
+
+export default LoginPage;
