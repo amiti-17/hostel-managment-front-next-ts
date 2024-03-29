@@ -1,3 +1,29 @@
 .inputGroup {
   display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+  justify-content: center;
+  font-style: inherit;
+  width: 100%;
+}
+
+.input {
+  width: 100%;
+  padding: 0.2rem 0.4rem;
+  border-radius: var(--border-radius);
+  color: inherit;
+  border: 1px solid var(--main-border-color);
+  background-color: var(--light-background-color);
+  min-height: 40px;
+}
+
+.input:focus {
+  outline-color: var(--main-border-color);
+}
+
+.messageBox {
+  align-items: left;
+  padding: 0.1rem 0.5rem;
+  margin: 0 auto;
+  color: var(--main-error-color);
 }

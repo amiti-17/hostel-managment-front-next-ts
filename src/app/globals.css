@@ -4,6 +4,16 @@
   --font-mono: ui-monospace, Menlo, Monaco, "Cascadia Mono", "Segoe UI Mono",
     "Roboto Mono", "Oxygen Mono", "Ubuntu Monospace", "Source Code Pro",
     "Fira Mono", "Droid Sans Mono", "Courier New", monospace;
+  --font-size: 16px;
+  --main-background-color: #fbf3d5;
+  --light-background-color: rgb(248, 252, 226);
+  --main-color: #9cafaa;
+  --main-border-color: #9cafaa;
+  --secondary-border-color: #5a7a72;
+  --main-error-color: rgb(240, 78, 78);
+  --color-1: #efbc9b;
+  --color-2: #d6dac8;
+  --color-3: #f3d5bc; /* from AI */
 }
 
 @media (prefers-color-scheme: dark) {
@@ -12,9 +22,15 @@
 }
 
 * {
+  font-size: var(--font-size);
   box-sizing: border-box;
   padding: 0;
   margin: 0;
+}
+
+body {
+  background-color: #fbf3d5;
+  color: var(--main-color);
 }
 
 a {

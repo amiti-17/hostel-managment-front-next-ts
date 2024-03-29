@@ -2,7 +2,7 @@ import { ChangeEvent, FocusEvent } from "react";
 import style from "./style.module.css";
 import { FormikErrors, FormikTouched } from "formik";
 
-type FormStamp = {
+type FormStamps = {
   email: string | undefined;
   password: string | undefined;
 };
@@ -18,7 +18,7 @@ type InputGroupProps = {
     (e: FocusEvent<any, Element>): void;
     <T = any>(fieldOrEvent: T): T extends string ? (e: any) => void : void;
   };
-  values: FormStamp;
+  values: FormStamps;
   errors: FormikErrors<{
     email: string;
     password: string;
@@ -39,7 +39,7 @@ const InputGroup = ({
   type,
 }: InputGroupProps) => {
   return (
-    <div className={style.InputGroup}>
+    <div className={style.inputGroup}>
       <input
         id={`${type}Input`}
         placeholder={`Input your ${type}...`}
@@ -48,8 +48,11 @@ const InputGroup = ({
         onChange={handleChange}
         onBlur={handleBlur}
         value={values[type]}
+        className={style.input}
       />
-      {touched[type] && errors[type] ? <div>{errors[type]}</div> : null}
+      {touched[type] && errors[type] ? (
+        <div className={style.messageBox}>{errors[type]}</div>
+      ) : null}
     </div>
   );
 };
