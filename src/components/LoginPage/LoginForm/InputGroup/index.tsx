@@ -49,6 +49,7 @@ const InputGroup = ({
         onBlur={handleBlur}
         value={values[type]}
         className={style.input}
+        autoComplete="type"
       />
       {touched[type] && errors[type] ? (
         <div className={style.messageBox}>{errors[type]}</div>

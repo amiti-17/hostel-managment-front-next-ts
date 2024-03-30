@@ -15,11 +15,11 @@ const Providers = ({ children }: ProvidersProps) => {
   const router = useRouter();
   const apolloClient = getApolloClient(router);
   return (
-    <ApolloProvider client={apolloClient}>
-      <NotificationWrapper>
+    <NotificationWrapper>
+      <ApolloProvider client={apolloClient}>
         <UserProvider>{children}</UserProvider>
-      </NotificationWrapper>
-    </ApolloProvider>
+      </ApolloProvider>
+    </NotificationWrapper>
   );
 };
 

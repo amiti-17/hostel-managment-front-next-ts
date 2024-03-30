@@ -11,6 +11,9 @@
   --main-border-color: #9cafaa;
   --secondary-border-color: #5a7a72;
   --main-error-color: rgb(240, 78, 78);
+  --nav-background-color: white;
+  --nav-background-active-color: var(--main-background-color);
+  --nav-background-separator-color: black;
   --color-1: #efbc9b;
   --color-2: #d6dac8;
   --color-3: #f3d5bc; /* from AI */

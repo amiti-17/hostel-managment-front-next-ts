@@ -1,30 +1,19 @@
 "use client";
 
-import { USERS } from "@/Apollo/queries/users";
-import { User } from "@/generated/types";
-import { useQuery } from "@apollo/client";
-import { useRouter } from "next/navigation";
-import { useEffect } from "react";
+import useUser from "@/Hooks/useUser";
+import GeneralPageLayout from "../GeneralPageLayout";
 import Dashboard from "./Dashboard";
+import { UserContext } from "@/providers/User";
+import { useContext } from "react";
 
 const DashboardWrapper = () => {
-  const router = useRouter();
-  const { data, loading, error } = useQuery(USERS.getCurrentUser);
-  useEffect(() => {
-    console.log(data, loading, error);
-  }, [data, loading, error]);
-  useEffect(() => {
-    if (!loading && !data) {
-      router.push("/login");
-    }
-  }, [data, loading]);
-
-  if (loading) {
-    return <>loading...</>;
-  }
-
-  const user: User = data.getCurrentUser;
-  return <Dashboard user={user} />;
+  const { user, setUser } = useContext(UserContext);
+  /*const {} = */ useUser({ user, setUser });
+  return (
+    <GeneralPageLayout>
+      <Dashboard />
+    </GeneralPageLayout>
+  );
 };
 
 export default DashboardWrapper;

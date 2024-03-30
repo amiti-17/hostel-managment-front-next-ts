@@ -1,0 +1,19 @@
+.link {
+  content: "";
+  position: relative;
+  flex: 1 1 auto;
+  background: var(--nav-background-color);
+  position: relative;
+  text-align: center;
+  line-height: 40px;
+  border-bottom: solid 2px var(--nav-background-separator-color);
+}
+
+.link + .link {
+  border-left: solid 2px var(--nav-background-separator-color);
+}
+
+.currentLink {
+  background: var(--nav-background-active-color);
+  box-sizing: border-box;
+}

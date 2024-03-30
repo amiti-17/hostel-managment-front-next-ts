@@ -1,14 +1,11 @@
+import NavBar from "@/components/NavBar";
 import { User } from "@/generated/types";
-
-type DashboardProps = {
-  user: User;
-};
-
-const Dashboard = ({ user }: DashboardProps) => {
+// { name: userName }: Pick<User, "name">
+const Dashboard = () => {
+  console.log();
   return (
     <>
-      <nav>nav</nav>
-      <main>{user.name}</main>
+      <main>{"userName"}</main>
       <footer>footer</footer>
     </>
   );
