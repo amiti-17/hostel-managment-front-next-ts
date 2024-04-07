@@ -1,21 +1,29 @@
+import { UserContext } from "@/providers/User";
 import UserComponent from "./User";
 import UserDetails from "./UserDetails";
-import { User } from "@/generated/types";
+import { useContext } from "react";
+import Separator from "@/components/Separator";
+import style from "./style.module.css";
 
 type ProfileProps = {
-  user: User;
+  // user: User;
 };
 
-const Profile = ({ user }: ProfileProps) => {
-  // const router = useRouter();
+const Profile = ({}: ProfileProps) => {
+  const { user } = useContext(UserContext);
+
+  if (!user) {
+    return null;
+  }
 
   return (
     <>
       {user && (
-        <>
-          <UserComponent user={user} />
-          <UserDetails />
-        </>
+        <div className={style.profileWrapper}>
+          <UserComponent name={user.name} />
+          <Separator width={"2px"} height={"200px"} />
+          <UserDetails user={user} />
+        </div>
       )}
     </>
   );

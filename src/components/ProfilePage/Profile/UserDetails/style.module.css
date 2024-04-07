@@ -1,0 +1,9 @@
+.userDetailsWrapper {
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: flex-start;
+  justify-content: center;
+  width: 45%;
+  padding-left: 15px;
+  gap: 5px;
+}

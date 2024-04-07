@@ -1,16 +1,19 @@
 "use client";
 
 import { useFormik } from "formik";
-import { loginValidationSchema } from "@/yup/loginFormValidation";
-import InputGroup from "./InputGroup";
-import style from "./style.module.css";
-import { useMutation } from "@apollo/client";
-import { AUTH } from "@/Apollo/queries/auth";
-import { FormEvent, useEffect } from "react";
 import { useRouter } from "next/navigation";
+import { useMutation } from "@apollo/client";
+import { FormEvent, useContext } from "react";
+import InputGroup from "./InputGroup";
+import { AUTH } from "@/Apollo/queries/auth";
 import { StatusOutput } from "@/generated/types";
+import { loginValidationSchema } from "@/yup/loginFormValidation";
+import processGraphqlErrors from "@/CustomError/processGraphqlErrors";
+import { NotificationContext } from "@/components/NotificationWrapper/NotificationProvider";
+import style from "./style.module.css";
 
 const LoginForm = () => {
+  const { setIsShown, setMessage, setType } = useContext(NotificationContext);
   const [loginQuery, { loading, error }] = useMutation(AUTH.login);
   const router = useRouter();
   const submitHandler = (values: { email: string; password: string }) => {
@@ -20,6 +23,10 @@ const LoginForm = () => {
       onCompleted(data: { login: StatusOutput }) {
         console.log(data);
         router.push("/dashboard");
+      },
+      onError(error) {
+        console.log(error);
+        processGraphqlErrors({ error, setIsShown, setMessage, setType });
       },
     });
   };
@@ -31,9 +38,6 @@ const LoginForm = () => {
     validationSchema: loginValidationSchema,
     onSubmit: submitHandler,
   });
-  useEffect(() => {
-    console.log(loading, error);
-  }, [loading, error]);
   const { errors, touched, values, handleBlur, handleSubmit, handleChange } =
     formik;
   return (
@@ -60,7 +64,7 @@ const LoginForm = () => {
         handleBlur={handleBlur}
         handleChange={handleChange}
       />
-      <button type="submit" className={style.submitButton}>
+      <button type="submit" className={style.submitButton} disabled={loading}>
         Submit
       </button>
     </form>

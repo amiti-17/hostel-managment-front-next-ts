@@ -1,6 +1,11 @@
 import React, { ReactNode, SetStateAction, useState } from "react";
 
-type NotificationType = "success" | "warning" | "none" | "error" | "info";
+export type NotificationType =
+  | "success"
+  | "warning"
+  | "none"
+  | "error"
+  | "info";
 
 export type NotificationContextType = {
   isShown: boolean;

@@ -1,14 +1,11 @@
-"use client";
-
-import Profile from "./Profile";
 import GeneralPageLayout from "@/components/GeneralPageLayout";
 
-const ProfileWrapper = () => {
+const Tasks = () => {
   return (
     <GeneralPageLayout>
-      <Profile />
+      <>Some Page</>
     </GeneralPageLayout>
   );
 };
 
-export default ProfileWrapper;
+export default Tasks;

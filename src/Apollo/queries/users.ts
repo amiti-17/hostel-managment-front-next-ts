@@ -24,4 +24,11 @@ export const USERS = {
       }
     }
   `,
+  updatePassword: gql`
+    mutation updatePassword($input: UpdateUsersPasswordInput!) {
+      updateUsersPassword(updateUsersPassword: $input) {
+        status
+      }
+    }
+  `,
 };

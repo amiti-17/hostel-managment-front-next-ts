@@ -1,14 +1,33 @@
-const UserDetails = () => {
+import { User } from "@/generated/types";
+import style from "./style.module.css";
+import displayArray from "@/functions/utils/displayArray";
+import Overlay from "@/components/Overlay";
+
+const UserDetails = ({ user }: { user: User }) => {
+  const { email, role } = user;
+
   return (
-    <div>
-      <>Contact information:</>
-      <>email</>
-      <>phone</>
-      <>status</>
-      <>groups</>
-      <>working days</>
-      <button>Settings</button>
-    </div>
+    <>
+      <div className={style.userDetailsWrapper}>
+        <div className="underline">Contact information:</div>
+        <div>
+          email: <br />
+          {email}
+        </div>
+        <div>
+          phone: <br />
+          {"NA"}
+        </div>
+        <div>
+          roles: <br />
+          {displayArray(role)}
+        </div>
+        <div>status ?</div>
+        <div>groups ?</div>
+        <div>working days ?</div>
+        <button>Update profile</button>
+      </div>
+    </>
   );
 };
 

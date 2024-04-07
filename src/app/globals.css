@@ -14,6 +14,10 @@
   --nav-background-color: white;
   --nav-background-active-color: var(--main-background-color);
   --nav-background-separator-color: black;
+  --profile-separator-color: black;
+  --main-button-color: rgb(136, 112, 45);
+  --main-background-button-color: var(--main-background-color);
+  --main-border-button-color: var(--main-border-color);
   --color-1: #efbc9b;
   --color-2: #d6dac8;
   --color-3: #f3d5bc; /* from AI */
@@ -41,8 +45,23 @@ a {
   text-decoration: none;
 }
 
+button {
+  font-size: inherit;
+  font-family: inherit;
+  color: var(--main-button-color);
+  background-color: var(--main-background-button-color);
+  border: 1.5px solid var(--main-border-button-color);
+  border-radius: var(--border-radius);
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+}
+
 @media (prefers-color-scheme: dark) {
   html {
     color-scheme: dark;
   }
+}
+
+.underline {
+  text-decoration: underline;
 }

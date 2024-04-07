@@ -14,7 +14,7 @@ export const errorLink = (router: AppRouterInstance) =>
               if (operation.operationName === "GetNewAccessToken") {
                 return document.location.pathname === "/"
                   ? ""
-                  : router.push("/");
+                  : router.push("/login");
               }
               return new Observable<FetchResult>((observer: any) => {
                 (async () => {
@@ -41,6 +41,6 @@ export const errorLink = (router: AppRouterInstance) =>
       }
     }
     if (networkError && window.location.pathname !== "/") {
-      router.push("/");
+      router.push("/login"); // TODO: create separate url for network error
     }
   });

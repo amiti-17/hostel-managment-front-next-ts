@@ -1,11 +1,12 @@
-import NavBar from "@/components/NavBar";
-import { User } from "@/generated/types";
+import { UserContext } from "@/providers/User";
+import { useContext } from "react";
 // { name: userName }: Pick<User, "name">
 const Dashboard = () => {
-  console.log();
+  const { user } = useContext(UserContext);
+  if (!user) return null;
   return (
     <>
-      <main>{"userName"}</main>
+      <main>{user.name}</main>
       <footer>footer</footer>
     </>
   );
