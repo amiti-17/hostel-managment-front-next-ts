@@ -6,7 +6,7 @@ import { useMutation } from "@apollo/client";
 import { FormEvent, useContext } from "react";
 import InputGroup from "./InputGroup";
 import { AUTH } from "@/Apollo/queries/auth";
-import { StatusOutput } from "@/generated/types";
+import { StatusOutput } from "@/config/system/types/generated/types";
 import { loginValidationSchema } from "@/yup/loginFormValidation";
 import processGraphqlErrors from "@/CustomError/processGraphqlErrors";
 import { NotificationContext } from "@/components/NotificationWrapper/NotificationProvider";

@@ -1,7 +1,6 @@
-import { User } from "@/generated/types";
+import { User } from "@/config/system/types/generated/types";
 import style from "./style.module.css";
 import displayArray from "@/functions/utils/displayArray";
-import Overlay from "@/components/Overlay";
 
 const UserDetails = ({ user }: { user: User }) => {
   const { email, role } = user;
@@ -24,7 +23,6 @@ const UserDetails = ({ user }: { user: User }) => {
         </div>
         <div>status ?</div>
         <div>groups ?</div>
-        <div>working days ?</div>
         <button>Update profile</button>
       </div>
     </>

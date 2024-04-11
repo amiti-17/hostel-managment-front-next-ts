@@ -11,7 +11,6 @@ type CurrentPageStr =
   | "tasks"
   | "schedule"
   | "statistics"
-  | "messages"
   | "map";
 
 const NavBar = ({}: NavBarProps) => {
@@ -21,7 +20,6 @@ const NavBar = ({}: NavBarProps) => {
     "tasks",
     "schedule",
     "statistics",
-    "messages",
     "map",
   ];
   return (

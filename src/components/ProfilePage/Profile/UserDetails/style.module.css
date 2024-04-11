@@ -3,7 +3,8 @@
   flex-flow: column nowrap;
   align-items: flex-start;
   justify-content: center;
-  width: 45%;
+  width: 40%;
+  min-width: 350px;
   padding-left: 15px;
   gap: 5px;
 }

@@ -1,6 +1,6 @@
 import { SetStateAction } from "react";
 import { useQuery } from "@apollo/client";
-import { User } from "@/generated/types";
+import { User } from "@/config/system/types/generated/types";
 import { USERS } from "@/Apollo/queries/users";
 import { NotificationType } from "@/components/NotificationWrapper/NotificationProvider";
 import ifNoCurrentUserFound from "@/functions/notification/ifNoCurrentUserFound";

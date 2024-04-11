@@ -1,6 +1,6 @@
 import { onError } from "@apollo/client/link/error";
 import { FetchResult, Observable } from "apollo-link";
-import { globalClient } from "../";
+import { globalClient } from "@/Apollo";
 import { AUTH } from "@/Apollo/queries/auth";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 

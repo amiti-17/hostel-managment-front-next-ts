@@ -1,0 +1,17 @@
+.form {
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+  padding: 20px;
+  background-color: var(--active-modal-background-color);
+  border-radius: var(--border-radius);
+}
+
+.messageBox {
+  align-items: left;
+  padding: 0.1rem 0.5rem;
+  margin: 0 auto;
+  color: var(--main-error-color);
+}

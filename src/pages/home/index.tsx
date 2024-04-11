@@ -3,7 +3,7 @@
 import { useContext, useEffect } from "react";
 import { useQuery } from "@apollo/client";
 import { USERS } from "@/Apollo/queries/users";
-import { User } from "@/generated/types";
+import { User } from "@/config/system/types/generated/types";
 import { NotificationContext } from "@/components/NotificationWrapper/NotificationProvider";
 
 const Home = () => {

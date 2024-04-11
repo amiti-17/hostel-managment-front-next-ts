@@ -1,5 +1,5 @@
 import React, { ReactNode, SetStateAction, useState } from "react";
-import { User } from "@/generated/types";
+import { User } from "@/config/system/types/generated/types";
 
 export type UserContextType = {
   user: User | undefined;

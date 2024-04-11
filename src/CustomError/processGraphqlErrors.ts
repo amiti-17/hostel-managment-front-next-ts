@@ -1,9 +1,9 @@
-import { NotificationType } from "@/components/NotificationWrapper/NotificationProvider";
+import { ApolloError } from "@apollo/client";
+import { SetStateAction } from "react";
 import { strConst } from "@/config/system/constants/strConst";
 import { networkError } from "@/config/system/errors/graphqlErrors";
 import { graphqlErrorsResponses } from "@/config/system/errors/graphqlErrorsResponses";
-import { ApolloError } from "@apollo/client";
-import { SetStateAction } from "react";
+import { NotificationType } from "@/components/NotificationWrapper/NotificationProvider";
 
 type ProcessGraphqlErrorsProps = {
   error: ApolloError;
@@ -23,17 +23,18 @@ const processGraphqlErrors = ({
     switch (currentError.extensions.code) {
       case "UNAUTHENTICATED":
         setMessage("Probably you provided invalid credentials...");
-        setType("error");
-        setIsShown(true);
         break;
+      case "INTERNAL_SERVER_ERROR":
+        setMessage(currentError.message);
       default:
         setMessage(
-          currentError.name + currentError.message ?? ": Some graphql error"
+          (currentError.name ?? "") + currentError.message ??
+            ": Some graphql error"
         );
-        setType("error");
-        setIsShown(true);
         break;
     }
+    setType("error");
+    setIsShown(true);
     console.warn(currentError);
   }
   if (error.protocolErrors[0]) {
