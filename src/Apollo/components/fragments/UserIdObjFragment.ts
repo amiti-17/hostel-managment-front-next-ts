@@ -6,5 +6,4 @@ export const UserIdObjFragment = gql`
       id
     }
   }
-  
 `;

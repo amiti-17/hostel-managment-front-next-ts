@@ -11,7 +11,7 @@ export const UserFragment = gql`
     }
     name
     email
-    role
+    roles
     id
   }
 `;

@@ -20,7 +20,7 @@ export const USERS = {
         }
         name
         email
-        role
+        roles
       }
     }
   `,

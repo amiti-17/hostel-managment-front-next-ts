@@ -1,7 +1,10 @@
 import { ApolloError } from "@apollo/client";
 import { SetStateAction } from "react";
 import { strConst } from "@/config/system/constants/strConst";
-import { networkError } from "@/config/system/errors/graphqlErrors";
+import {
+  generalError,
+  networkError,
+} from "@/config/system/errors/graphqlErrors";
 import { graphqlErrorsResponses } from "@/config/system/errors/graphqlErrorsResponses";
 import { NotificationType } from "@/components/NotificationWrapper/NotificationProvider";
 
@@ -25,6 +28,8 @@ const processGraphqlErrors = ({
         setMessage("Probably you provided invalid credentials...");
         break;
       case "INTERNAL_SERVER_ERROR":
+        setMessage(currentError.message);
+      case "FORBIDDEN":
         setMessage(currentError.message);
       default:
         setMessage(
