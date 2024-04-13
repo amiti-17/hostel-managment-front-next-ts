@@ -3,7 +3,8 @@ import style from "./style.module.css";
 import displayArray from "@/functions/utils/displayArray";
 
 const UserDetails = ({ user }: { user: User }) => {
-  const { email, role } = user;
+  const { email, roles } = user;
+  console.log(user);
 
   return (
     <>
@@ -19,7 +20,7 @@ const UserDetails = ({ user }: { user: User }) => {
         </div>
         <div>
           roles: <br />
-          {displayArray(role)}
+          {displayArray(roles)}
         </div>
         <div>status ?</div>
         <div>groups ?</div>

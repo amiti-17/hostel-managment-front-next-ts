@@ -12,6 +12,11 @@ export const UserFragment = gql`
     name
     email
     roles
-    id
+    profileImage {
+      id
+      name
+      type
+      imageSrc
+    }
   }
 `;

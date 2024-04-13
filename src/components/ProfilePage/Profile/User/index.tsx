@@ -32,7 +32,7 @@ const UserComponent = ({ name }: UserComponentProps) => {
           <ChangePasswordForm usersId={userId} />
         </Overlay>
       )}
-      <UsersProfileImage imageSrc={undefined} />
+      <UsersProfileImage image={user.profileImage} usersId={user.id} />
       <span style={{ fontSize: "larger" }}>{name}</span>
       <button
         onClick={(e) =>

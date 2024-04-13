@@ -31,4 +31,11 @@ export const USERS = {
       }
     }
   `,
+  updateProfileImage: gql`
+    mutation updateProfileImage($input: UpdateUsersProfileImage!) {
+      updateProfileImage(updateUsersProfileImage: $input) {
+        status
+      }
+    }
+  `,
 };

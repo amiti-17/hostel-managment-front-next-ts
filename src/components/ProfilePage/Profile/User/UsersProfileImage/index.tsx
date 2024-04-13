@@ -1,81 +1,74 @@
 import Image from "next/image";
 import { CiUser } from "react-icons/ci";
-import {
-  AllowedImageType,
-  allowedImageTypes,
-} from "@/config/system/types/allowedUploadsImage";
-import { ChangeEventHandler, useContext, useState } from "react";
-import displayArray from "@/functions/utils/displayArray";
+import { useMutation } from "@apollo/client";
+import { ChangeEventHandler, useContext, useEffect, useState } from "react";
+import { USERS } from "@/Apollo/queries/users";
+import { ImageType } from "@/config/system/types/generalImageType";
+import { Maybe, ProfileImage } from "@/config/system/types/generated/types";
 import { NotificationContext } from "@/components/NotificationWrapper/NotificationProvider";
 import style from "./style.module.css";
+import imageUploadHandler from "./imageUploadHandler";
+import chooseTextOnEditingButton from "./chooseTextOnEditingButton";
 
 type UsersProfileImageProps = {
-  imageSrc: string | undefined;
+  image: Maybe<ProfileImage> | undefined;
+  usersId: string;
 };
 
 // TODO: Create a single method which store src for image and display only from that.
-const UsersProfileImage = ({ imageSrc }: UsersProfileImageProps) => {
-  const [editingImage, setEditingImage] = useState<boolean>(false);
-  const [uploadedImageSrc, setUploadedImageSrc] = useState<string>(
-    imageSrc ?? ""
-  );
+const UsersProfileImage = ({ image, usersId }: UsersProfileImageProps) => {
+  const [updateProfileImage] = useMutation(USERS.updateProfileImage);
+  const [isImageEditing, setIsImageEditing] = useState<boolean>(false);
+  const [displayedImage, setDisplayedImage] = useState<ImageType>();
+  const [isImageWasUploaded, setIsImageWasUploaded] = useState<boolean>(false);
+  useEffect(() => {
+    if (image && image.id) {
+      const { name, type, imageSrc } = image;
+      setDisplayedImage({ name, type, imageSrc });
+    }
+  });
+  useEffect(() => {
+    if (displayedImage?.imageSrc) {
+      setIsImageWasUploaded(true);
+    }
+  }, [displayedImage]);
+  useEffect(() => {
+    if (!isImageEditing && isImageWasUploaded && displayedImage?.imageSrc) {
+      updateProfileImage({
+        variables: {
+          input: {
+            usersId,
+            type: displayedImage.type,
+            name: displayedImage.name,
+            newProfileImage: displayedImage.imageSrc,
+          },
+        },
+        onCompleted(data) {
+          console.log(data);
+          setIsImageWasUploaded(false);
+          setMessage("your image was uploaded successfully");
+          setType("success");
+          setIsShown(true);
+        },
+      });
+    }
+  }, [isImageEditing]);
   const { setType, setMessage, setIsShown } = useContext(NotificationContext);
   const handleImageUpload: ChangeEventHandler<HTMLInputElement> = (event) => {
-    console.log(event);
-    if (event.target.files) {
-      const file = event.target.files[0];
-      const fileType = file.type as AllowedImageType;
-      if (!allowedImageTypes.includes(fileType)) {
-        setType("error");
-        setMessage(
-          "You can only upload images of the following types: " +
-            displayArray(allowedImageTypes)
-        );
-        setIsShown(true);
-        event.stopPropagation();
-        event.preventDefault();
-        event.target.value = "";
-        setUploadedImageSrc("");
-        return;
-      }
-      const reader = new FileReader();
-      reader.addEventListener("load", (event) => {
-        if (event.target && event.target.result) {
-          console.log(event);
-          setUploadedImageSrc(event.target.result as string);
-        }
-      });
-      reader.readAsDataURL(file);
-    }
-  };
-  const chooseTextOnEditingButton = ({
-    uploadedImageSrc,
-    editingImage,
-    imageSrc,
-  }: {
-    uploadedImageSrc: string;
-    editingImage: boolean;
-    imageSrc: string | undefined;
-  }) => {
-    if (uploadedImageSrc && !editingImage) {
-      return "Change image";
-    }
-    if (uploadedImageSrc && editingImage) {
-      return "Save changes";
-    }
-    if (editingImage && !uploadedImageSrc) {
-      return "Discard changes";
-    }
-    if (!uploadedImageSrc && !editingImage) {
-      return imageSrc ? "Change image" : "Set image";
-    }
+    imageUploadHandler({
+      event,
+      setDisplayedImage,
+      setType,
+      setMessage,
+      setIsShown,
+    });
   };
   return (
     <>
       <div className={style.profilePictureWrapper}>
-        {uploadedImageSrc && (
+        {displayedImage?.imageSrc && (
           <Image
-            src={uploadedImageSrc}
+            src={displayedImage?.imageSrc}
             alt="Uploaded Image"
             fill
             style={{ objectFit: "cover" }}
@@ -83,18 +76,18 @@ const UsersProfileImage = ({ imageSrc }: UsersProfileImageProps) => {
         )}
         <CiUser className={style.profilePicture} />
       </div>
-      {editingImage && (
+      {isImageEditing && (
         <input
           type="file"
           onChange={handleImageUpload}
           className={style.uploadImageInput}
         />
       )}
-      <button onClick={() => setEditingImage((prev) => !prev)}>
+      <button onClick={() => setIsImageEditing((prev) => !prev)}>
         {chooseTextOnEditingButton({
-          editingImage,
-          imageSrc,
-          uploadedImageSrc,
+          isImageEditing,
+          imageSrc: image?.imageSrc,
+          displayedImageSrc: displayedImage?.imageSrc,
         })}
       </button>
     </>
