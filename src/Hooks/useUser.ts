@@ -1,5 +1,5 @@
-import { SetStateAction } from "react";
-import { useQuery } from "@apollo/client";
+import { SetStateAction, useEffect } from "react";
+import { useLazyQuery } from "@apollo/client";
 import { User } from "@/config/system/types/generated/types";
 import { USERS } from "@/Apollo/queries/users";
 import { NotificationType } from "@/components/NotificationWrapper/NotificationProvider";
@@ -21,19 +21,22 @@ const useUser = ({
   setMessage,
   setType,
 }: UseUserProps) => {
-  const { data, loading, error } = useQuery(USERS.getCurrentUser, {
+  const [makeQuery, { loading, error }] = useLazyQuery(USERS.getCurrentUser, {
     onCompleted(data) {
       if (!data) {
         ifNoCurrentUserFound({ setMessage, setType, setIsShown });
       }
+      const myUser: User | undefined = data?.getCurrentUser;
+      setUser(myUser);
     },
     onError(error) {
       processGraphqlErrors({ error, setIsShown, setMessage, setType });
     },
   });
 
-  const myUser: User | undefined = data?.getCurrentUser;
-  if (!user) setUser(myUser);
+  useEffect(() => {
+    makeQuery();
+  }, []);
 
   return {
     loading,
