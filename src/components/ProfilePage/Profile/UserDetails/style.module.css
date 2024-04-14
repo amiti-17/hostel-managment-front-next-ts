@@ -7,4 +7,5 @@
   min-width: 350px;
   padding-left: 15px;
   gap: 5px;
+  border-left: 2px solid var(--main-border-separator-color);
 }

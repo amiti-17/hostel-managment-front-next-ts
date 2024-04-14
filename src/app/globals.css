@@ -18,6 +18,7 @@
   --main-button-color: rgb(136, 112, 45);
   --main-background-button-color: var(--main-background-color);
   --main-border-button-color: var(--main-border-color);
+  --main-border-separator-color: rgb(136, 112, 45);
   --active-modal-background-color: #fff;
   --color-1: #efbc9b;
   --color-2: #d6dac8;

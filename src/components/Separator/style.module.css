@@ -1,5 +1,6 @@
 .separator {
+  display: inline-flex;
   background-color: var(--profile-separator-color);
   width: 2px;
-  height: 20px;
+  height: 100%;
 }

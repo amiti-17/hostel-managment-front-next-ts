@@ -21,7 +21,7 @@ const Profile = ({}: ProfileProps) => {
       {user && (
         <div className={style.profileWrapper}>
           <UserComponent name={user.name} />
-          <Separator width={"2px"} height={"200px"} />
+          {/* <Separator width={"2px"} height={"100%"} /> */}
           <UserDetails user={user} />
         </div>
       )}
