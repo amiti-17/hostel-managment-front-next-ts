@@ -4,11 +4,16 @@ import { useMutation } from "@apollo/client";
 import { ChangeEventHandler, useContext, useEffect, useState } from "react";
 import { USERS } from "@/Apollo/queries/users";
 import { ImageType } from "@/config/system/types/generalImageType";
-import { Maybe, ProfileImage } from "@/config/system/types/generated/types";
+import {
+  Maybe,
+  ProfileImage,
+  StatusOutput,
+} from "@/config/system/types/generated/types";
 import { NotificationContext } from "@/components/NotificationWrapper/NotificationProvider";
 import style from "./style.module.css";
 import imageUploadHandler from "./imageUploadHandler";
 import chooseTextOnEditingButton from "./chooseTextOnEditingButton";
+import processGraphqlErrors from "@/CustomError/processGraphqlErrors";
 
 type UsersProfileImageProps = {
   image: Maybe<ProfileImage> | undefined;
@@ -26,7 +31,7 @@ const UsersProfileImage = ({ image, usersId }: UsersProfileImageProps) => {
       const { name, type, imageSrc } = image;
       setDisplayedImage({ name, type, imageSrc });
     }
-  });
+  }, []);
   useEffect(() => {
     if (displayedImage?.imageSrc) {
       setIsImageWasUploaded(true);
@@ -44,11 +49,21 @@ const UsersProfileImage = ({ image, usersId }: UsersProfileImageProps) => {
           },
         },
         onCompleted(data) {
-          console.log(data);
+          const myData: StatusOutput | undefined = data?.updateProfileImage;
+          if (myData?.status) {
+            setMessage("your image was uploaded successfully");
+            setType("success");
+          } else {
+            setMessage(
+              "your image was not uploaded successfully, try again later"
+            );
+            setType("warning");
+          }
           setIsImageWasUploaded(false);
-          setMessage("your image was uploaded successfully");
-          setType("success");
           setIsShown(true);
+        },
+        onError(error) {
+          processGraphqlErrors({ error, setIsShown, setMessage, setType });
         },
       });
     }

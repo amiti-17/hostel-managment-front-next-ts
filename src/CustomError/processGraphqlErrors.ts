@@ -1,10 +1,7 @@
 import { ApolloError } from "@apollo/client";
 import { SetStateAction } from "react";
 import { strConst } from "@/config/system/constants/strConst";
-import {
-  generalError,
-  networkError,
-} from "@/config/system/errors/graphqlErrors";
+import { networkError } from "@/config/system/errors/graphqlErrors";
 import { graphqlErrorsResponses } from "@/config/system/errors/graphqlErrorsResponses";
 import { NotificationType } from "@/components/NotificationWrapper/NotificationProvider";
 
@@ -21,6 +18,7 @@ const processGraphqlErrors = ({
   setMessage,
   setType,
 }: ProcessGraphqlErrorsProps) => {
+  console.warn(error);
   if (error.graphQLErrors[0]) {
     const currentError = error.graphQLErrors[0];
     switch (currentError.extensions.code) {
@@ -70,6 +68,7 @@ const processGraphqlErrors = ({
       error.networkError.message === networkError.message &&
       error.networkError.name === networkError.name
     ) {
+      console.warn(Object.keys(error.networkError));
       setMessage(graphqlErrorsResponses.networkError);
       setType("error");
       setIsShown(true);
