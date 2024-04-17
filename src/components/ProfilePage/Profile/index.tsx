@@ -2,7 +2,6 @@ import { UserContext } from "@/providers/User";
 import UserComponent from "./User";
 import UserDetails from "./UserDetails";
 import { useContext } from "react";
-import Separator from "@/components/Separator";
 import style from "./style.module.css";
 
 type ProfileProps = {

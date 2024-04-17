@@ -5,6 +5,7 @@
   background-color: azure;
   padding: 8px;
   position: relative;
+  z-index: 1;
   overflow: hidden;
 }
 

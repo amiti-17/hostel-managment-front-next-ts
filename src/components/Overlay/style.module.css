@@ -1,5 +1,6 @@
 .overlay {
   position: absolute !important;
+  z-index: 10;
   top: 0;
   left: 0;
   width: 100% !important;
@@ -9,6 +10,7 @@
 
 .modalWrapper {
   position: absolute;
+  z-index: 11;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -60%);
