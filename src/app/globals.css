@@ -82,3 +82,21 @@ input:focus {
 .underline {
   text-decoration: underline;
 }
+
+.fade-css-transition-enter {
+  opacity: 0;
+  transform: scale(0.9);
+}
+.fade-css-transition-enter-active {
+  opacity: 1;
+  transform: translateX(0);
+  transition: opacity 300ms, transform 300ms;
+}
+.fade-css-transition-exit {
+  opacity: 1;
+}
+.fade-css-transition-exit-active {
+  opacity: 0;
+  transform: scale(0.9);
+  transition: opacity 300ms, transform 300ms;
+}

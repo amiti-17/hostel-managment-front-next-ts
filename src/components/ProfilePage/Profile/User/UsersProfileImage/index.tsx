@@ -1,9 +1,17 @@
 import Image from "next/image";
 import { CiUser } from "react-icons/ci";
 import { useMutation } from "@apollo/client";
-import { ChangeEventHandler, useContext, useEffect, useState } from "react";
+import { CSSTransition } from "react-transition-group";
+import {
+  ChangeEventHandler,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import { USERS } from "@/Apollo/queries/users";
 import { ImageType } from "@/config/system/types/generalImageType";
+import processGraphqlErrors from "@/CustomError/processGraphqlErrors";
 import {
   Maybe,
   ProfileImage,
@@ -13,7 +21,6 @@ import { NotificationContext } from "@/components/NotificationWrapper/Notificati
 import style from "./style.module.css";
 import imageUploadHandler from "./imageUploadHandler";
 import chooseTextOnEditingButton from "./chooseTextOnEditingButton";
-import processGraphqlErrors from "@/CustomError/processGraphqlErrors";
 
 type UsersProfileImageProps = {
   image: Maybe<ProfileImage> | undefined;
@@ -22,10 +29,14 @@ type UsersProfileImageProps = {
 
 // TODO: Create a single method which store src for image and display only from that.
 const UsersProfileImage = ({ image, usersId }: UsersProfileImageProps) => {
+  const [isEditProfileImageButtonShown, setIsEditProfileImageButtonShown] =
+    useState(false);
   const [updateProfileImage] = useMutation(USERS.updateProfileImage);
   const [isImageEditing, setIsImageEditing] = useState<boolean>(false);
   const [displayedImage, setDisplayedImage] = useState<ImageType>();
   const [isImageWasUploaded, setIsImageWasUploaded] = useState<boolean>(false);
+  const buttonChangeImageRef = useRef(null);
+
   useEffect(() => {
     if (image && image.id) {
       const { name, type, imageSrc } = image;
@@ -79,17 +90,21 @@ const UsersProfileImage = ({ image, usersId }: UsersProfileImageProps) => {
     });
   };
   return (
-    <>
+    <div
+      onMouseEnter={() => setIsEditProfileImageButtonShown(true)} // TODO: think about mobile device support
+      onMouseLeave={() => setIsEditProfileImageButtonShown(false)}
+      className={style.userProfilePictureWrapper}
+    >
       <div className={style.profilePictureWrapper}>
         {displayedImage?.imageSrc && (
           <Image
             src={displayedImage?.imageSrc}
             alt="Uploaded Image"
             fill
-            style={{ objectFit: "cover" }}
+            className={style.profilePicture}
           />
         )}
-        <CiUser className={style.profilePicture} />
+        {!displayedImage && <CiUser className={style.profileIcon} />}
       </div>
       {isImageEditing && (
         <input
@@ -98,14 +113,26 @@ const UsersProfileImage = ({ image, usersId }: UsersProfileImageProps) => {
           className={style.uploadImageInput}
         />
       )}
-      <button onClick={() => setIsImageEditing((prev) => !prev)}>
-        {chooseTextOnEditingButton({
-          isImageEditing,
-          imageSrc: image?.imageSrc,
-          displayedImageSrc: displayedImage?.imageSrc,
-        })}
-      </button>
-    </>
+
+      <CSSTransition
+        in={isEditProfileImageButtonShown}
+        nodeRef={buttonChangeImageRef}
+        timeout={300}
+        classNames="fade-css-transition"
+        unmountOnExit
+      >
+        <button
+          ref={buttonChangeImageRef}
+          onClick={() => setIsImageEditing((prev) => !prev)}
+        >
+          {chooseTextOnEditingButton({
+            isImageEditing,
+            imageSrc: image?.imageSrc,
+            displayedImageSrc: displayedImage?.imageSrc,
+          })}
+        </button>
+      </CSSTransition>
+    </div>
   );
 };
 

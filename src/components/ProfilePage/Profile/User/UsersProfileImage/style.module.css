@@ -1,5 +1,15 @@
+.userProfilePictureWrapper {
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  gap: 15px;
+}
+
 .profilePictureWrapper {
   max-width: 250px;
+  aspect-ratio: 1;
   width: 80%;
   border-radius: 50%;
   background-color: azure;
@@ -9,9 +19,16 @@
   overflow: hidden;
 }
 
+.profileIcon {
+  width: 100%;
+  height: 100%;
+}
+
 .profilePicture {
   width: 100%;
   height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
 }
 
 .uploadImageInput {
