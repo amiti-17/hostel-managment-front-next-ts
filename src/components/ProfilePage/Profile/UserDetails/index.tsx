@@ -1,9 +1,10 @@
 import { User } from "@/config/system/types/generated/types";
 import style from "./style.module.css";
 import displayArray from "@/functions/utils/displayArray";
+import { useEffect } from "react";
 
 const UserDetails = ({ user }: { user: User }) => {
-  const { email, roles } = user;
+  const { email, roles, groupList, phone } = user;
   console.log(user);
 
   return (
@@ -11,20 +12,30 @@ const UserDetails = ({ user }: { user: User }) => {
       <div className={style.userDetailsWrapper}>
         <div className="underline">Contact information:</div>
         <div>
-          email: <br />
+          <span className={style.titleSpan}>email: </span>
+          <br />
           {email}
         </div>
         <div>
-          phone: <br />
-          {"NA"}
+          <span className={style.titleSpan}>phone: </span>
+          <br />
+          {phone}
         </div>
-        <div>
-          roles: <br />
-          {displayArray(roles)}
-        </div>
-        <div>status ?</div>
-        <div>groups ?</div>
-        <button>Update profile</button>
+        {roles && (
+          <div>
+            <span className={style.titleSpan}>roles: </span>
+            <br />
+            {displayArray(roles)}
+          </div>
+        )}
+        {groupList && groupList[0] && (
+          <div>
+            <span className={style.titleSpan}>groups: </span>
+            <br />
+            {displayArray(groupList)}{" "}
+          </div>
+        )}
+        {/* <button>Update profile</button> */}
       </div>
     </>
   );

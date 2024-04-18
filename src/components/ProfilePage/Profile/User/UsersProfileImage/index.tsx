@@ -27,7 +27,7 @@ type UsersProfileImageProps = {
   usersId: string;
 };
 
-// TODO: Create a single method which store src for image and display only from that.
+// TODO: Maybe rewrite to something like this: https://codesandbox.io/p/sandbox/react-image-crop-demo-with-react-hooks-y831o?file=%2Fsrc%2FApp.tsx%3A243%2C2
 const UsersProfileImage = ({ image, usersId }: UsersProfileImageProps) => {
   const [isEditProfileImageButtonShown, setIsEditProfileImageButtonShown] =
     useState(false);

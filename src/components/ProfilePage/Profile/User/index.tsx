@@ -47,7 +47,7 @@ const UserComponent = ({ name }: UserComponentProps) => {
       >
         Change password
       </button>
-      <button>Settings</button>
+      {/* <button>Settings</button> */}
     </div>
   );
 };
