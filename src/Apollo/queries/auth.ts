@@ -8,6 +8,13 @@ export const AUTH = {
       }
     }
   `,
+  adminLogin: gql`
+    mutation Login($input: AuthLoginInput!) {
+      adminLogin(authLoginInput: $input) {
+        status
+      }
+    }
+  `,
   logout: gql`
     mutation logout {
       logout {

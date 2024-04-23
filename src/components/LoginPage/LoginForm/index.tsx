@@ -2,7 +2,13 @@
 
 import { useFormik } from "formik";
 import { useRouter } from "next/navigation";
-import { useMutation } from "@apollo/client";
+import {
+  ApolloCache,
+  DefaultContext,
+  MutationFunctionOptions,
+  OperationVariables,
+  useMutation,
+} from "@apollo/client";
 import { FormEvent, useContext } from "react";
 import InputGroup from "./InputGroup";
 import { AUTH } from "@/Apollo/queries/auth";
@@ -12,23 +18,42 @@ import processGraphqlErrors from "@/CustomError/processGraphqlErrors";
 import { NotificationContext } from "@/components/NotificationWrapper/NotificationProvider";
 import style from "./style.module.css";
 
-const LoginForm = () => {
+type LoginFormProps = {
+  type?: "admin";
+};
+
+const LoginForm = ({ type }: LoginFormProps) => {
   const { setIsShown, setMessage, setType } = useContext(NotificationContext);
-  const [loginQuery, { loading, error }] = useMutation(AUTH.login);
+  const [loginQuery, { loading }] = useMutation(AUTH.login);
+  const [adminLoginQuery, { loading: adminLoading }] = useMutation(
+    AUTH.adminLogin
+  );
   const router = useRouter();
   const submitHandler = (values: { email: string; password: string }) => {
     console.log(JSON.stringify(values, null, 2));
-    loginQuery({
+    const queryConfig:
+      | MutationFunctionOptions<
+          any,
+          OperationVariables,
+          DefaultContext,
+          ApolloCache<any>
+        >
+      | undefined = {
       variables: { input: values },
       onCompleted(data: { login: StatusOutput }) {
         console.log(data);
-        router.push("/dashboard");
+        type || router.push("/dashboard");
       },
       onError(error) {
         console.log(error);
         processGraphqlErrors({ error, setIsShown, setMessage, setType });
       },
-    });
+    };
+    if (type === "admin") {
+      adminLoginQuery(queryConfig);
+      return;
+    }
+    loginQuery(queryConfig);
   };
   const formik = useFormik({
     initialValues: {
@@ -64,7 +89,11 @@ const LoginForm = () => {
         handleBlur={handleBlur}
         handleChange={handleChange}
       />
-      <button type="submit" className={style.submitButton} disabled={loading}>
+      <button
+        type="submit"
+        className={style.submitButton}
+        disabled={loading || adminLoading}
+      >
         Submit
       </button>
     </form>
